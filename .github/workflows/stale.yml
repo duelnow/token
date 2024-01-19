@@ -1,0 +1,17 @@
+name: Stale
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v8
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-pr-message: 'This PR has been automatically marked as stale because it has not had activity in 1 day. It will be closed in 14 days if no activity occurrs.'
+          exempt-draft-pr: true
+          days-before-stale: 1
+          days-before-close: 14

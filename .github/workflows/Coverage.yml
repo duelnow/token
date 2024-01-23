@@ -42,6 +42,7 @@ jobs:
       uses: Nef10/lcov-reporter-action@v0.3.0
       with:
         lcov-file: ./coverage/lcov.info
-        prnumber: ${{ steps.findPr.outputs.number }}
+        pr-number: ${{ steps.findPr.outputs.number }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
 

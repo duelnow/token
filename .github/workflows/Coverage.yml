@@ -23,16 +23,25 @@ jobs:
     - name: Coverage
       run: npx hardhat coverage
 
-    - name: Debug Coverage
-      run: |
-        ls -l coverage
-        cat coverage.json
+    # - name: Debug Coverage
+    #   run: |
+    #     ls -l coverage
+    #     cat coverage.json
 
-    - name: Comment Test Coverage
-      uses: AthleticNet/comment-test-coverage@1.1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        path: ./coverage/coverage-final.json
-        title: Karma Test Coverage
+    # - name: Comment Test Coverage
+    #   uses: AthleticNet/comment-test-coverage@1.1
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     path: ./coverage/coverage-final.json
+    #     title: Karma Test Coverage
+    - name: Find the PR
+        uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+
+      - name: Comment with Test Coverage
+        uses: Nef10/lcov-reporter-action@v0.3.0
+        with:
+          lcov-file: ./coverage/lcov.info
+          prnumber: ${{ steps.findPr.outputs.number }}
 
 

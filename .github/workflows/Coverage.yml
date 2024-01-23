@@ -24,8 +24,12 @@ jobs:
     - name: Coverage
       run: npx hardhat coverage
 
+    - name: Find the PR
+      uses: jwalton/gh-find-current-pr@v1
+      id: findPr
+
     - name: Comment with Test Coverage
       uses: ArtiomTr/jest-coverage-report-action@v2
       with:
-        test-script: npm run coverage
+        test-script: npm run test
         prnumber: ${{ steps.findPr.outputs.number }}

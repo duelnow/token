@@ -11,7 +11,7 @@
     "generate-types": "npx hardhat typechain",
     "prettier": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'",
     "postinstall": "npx hardhat compile && npm run generate-types",
-    "test": "npx jest --coverage --forceExit",
+    "test": "hardhat test",
     "deploy:arbitrumSepolia": "hardhat run --network arbitrumSepolia",
     "verify:arbitrumSepolia": "hardhat verify --network arbitrumSepolia",
     "deploy:arbitrumOne": "hardhat run --network arbitrumOne",

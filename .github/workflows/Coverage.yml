@@ -27,7 +27,7 @@ jobs:
       uses: vhoyer/comment-test-coverage@1.3.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        path: coverage/coverage.json
+        path: coverage.json
         title: Test Coverage
 
 

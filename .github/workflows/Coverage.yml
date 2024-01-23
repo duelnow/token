@@ -54,6 +54,6 @@ jobs:
         # run the server in the previous step
         # and add that URL here (For Example: http://172.17.0.1:8000/).
         # Comma seperated URLs are accepted.
-        github_token: {{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
 

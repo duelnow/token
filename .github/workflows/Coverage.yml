@@ -24,9 +24,9 @@ jobs:
       run: npx hardhat coverage
 
     - name: Debug Coverage
-        run: |
-          ls -l coverage
-          cat coverage.json
+      run: |
+        ls -l coverage
+        cat coverage.json
 
     - name: Comment Test Coverage
       uses: AthleticNet/comment-test-coverage@1.1

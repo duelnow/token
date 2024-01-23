@@ -31,5 +31,5 @@ jobs:
     - name: Comment with Test Coverage
       uses: ArtiomTr/jest-coverage-report-action@v2
       with:
-        test-script: npm run test
+        test-script: npm run coverage
         prnumber: ${{ steps.findPr.outputs.number }}

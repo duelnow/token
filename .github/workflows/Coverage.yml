@@ -35,13 +35,13 @@ jobs:
     #     path: ./coverage/coverage-final.json
     #     title: Karma Test Coverage
     - name: Find the PR
-        uses: jwalton/gh-find-current-pr@v1
-        id: findPr
+      uses: jwalton/gh-find-current-pr@v1
+      id: findPr
 
-      - name: Comment with Test Coverage
-        uses: Nef10/lcov-reporter-action@v0.3.0
-        with:
-          lcov-file: ./coverage/lcov.info
-          prnumber: ${{ steps.findPr.outputs.number }}
+    - name: Comment with Test Coverage
+      uses: Nef10/lcov-reporter-action@v0.3.0
+      with:
+        lcov-file: ./coverage/lcov.info
+        prnumber: ${{ steps.findPr.outputs.number }}
 
 

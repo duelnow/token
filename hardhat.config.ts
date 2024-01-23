@@ -111,7 +111,7 @@ const config: ExtendedHardhatUserConfig = {
     enabled: true,
     currency: "USD",
     gasPrice: 21,
-    outputFile: 'gas-report.txt',
+    outputFile: 'report.json',
     showMethodSig: true,
     noColors: true,
   },

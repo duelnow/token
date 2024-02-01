@@ -1,0 +1,51 @@
+{
+  "name": "duelnow-token",
+  "version": "1.0.0",
+  "description": "ERC20 token",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npx husky install",
+    "cleanup": "rm -rf node_modules/ artifacts/ cache/ coverage/ typechain-types/",
+    "compile": "hardhat compile --force",
+    "coverage": "RUNNING_COVERAGE=1 hardhat coverage --solcoverjs ./.solcover.ts",
+    "generate-types": "npx hardhat typechain",
+    "prettier": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'",
+    "postinstall": "npx hardhat compile && npm run generate-types",
+    "test": "hardhat test",
+    "deploy:arbitrumSepolia": "hardhat run --network arbitrumSepolia",
+    "verify:arbitrumSepolia": "hardhat verify --network arbitrumSepolia",
+    "deploy:arbitrumOne": "hardhat run --network arbitrumOne",
+    "verify:arbitrumOne": "hardhat verify --network arbitrumOne",
+    "deploy:sepolia": "hardhat run --network sepolia",
+    "verify:sepolia": "hardhat verify --network sepolia",
+    "deploy:mainnet": "hardhat run --network mainnet",
+    "verify:mainnet": "hardhat verify --network mainnet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stormxio/duelnow-token.git"
+  },
+  "keywords": [
+    "dunc"
+  ],
+  "author": "Stormx Engineering",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stormxio/duelnow-token/issues"
+  },
+  "homepage": "https://github.com/stormxio/duelnow-token#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "dotenv-extended": "^2.9.0",
+    "ethers": "^6.10.0",
+    "hardhat": "^2.0.2",
+    "hardhat-contract-sizer": "^2.10.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "husky": "^8.0.3",
+    "prettier-plugin-solidity": "^1.3.1",
+    "solhint": "^4.1.1",
+    "solhint-plugin-prettier": "^0.1.0",
+    "solidity-coverage": "^0.8.5"
+  }
+}

@@ -4,7 +4,7 @@
   "description": "ERC20 token",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npx husky install",
+    "preinstall": "npx husky install && npx npm-force-resolutions",
     "cleanup": "rm -rf node_modules/ artifacts/ cache/ coverage/ typechain-types/",
     "compile": "hardhat compile --force",
     "coverage": "RUNNING_COVERAGE=1 hardhat coverage --solcoverjs ./.solcover.ts",
@@ -20,6 +20,9 @@
     "verify:sepolia": "hardhat verify --network sepolia",
     "deploy:mainnet": "hardhat run --network mainnet",
     "verify:mainnet": "hardhat verify --network mainnet"
+  },
+  "overrides": {
+    "ws": "^8.16.1"
   },
   "repository": {
     "type": "git",

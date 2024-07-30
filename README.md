@@ -1,32 +1,32 @@
 # duelnow-token
 
-[![Coverage](https://github.com/stormxio/duelnow-token/actions/workflows/Coverage.yml/badge.svg)](https://github.com/stormxio/duelnow-token/actions/workflows/Coverage.yml)
+[![Coverage](https://github.com/duelnow/token/actions/workflows/Coverage.yml/badge.svg)](https://github.com/duelnow/token/actions/workflows/Coverage.yml)
 
-Duelnow (DUNC) token is deployed on [mainnet](https://etherscan.io/token): `N/A`
+Duelnow (DNOW) token is deployed on [mainnet](https://etherscan.io/token): `N/A`
 
-The new DUNC token will be an OpenZeplin based ERC20 contract.
+The new DNOW token will be an OpenZeplin based ERC20 contract.
 
 ## Requirements
 
-This project consists of DUNC ERC20 token.
+This project consists of DNOW ERC20 token.
 
-### DUNC contract
+### DNOW contract
 
 - Supports the standard ERC20 interface
-- The name of the token is "Duelnow"
-- The symbol of the token is "DUNC"
-- The total supply is 12.500.000.000
+- The name of the token is "DuelNow"
+- The symbol of the token is "DNOW"
+- The total supply is 1_000_000_000
 - The decimals remain according to the standard
 - The token is ownable
-- Duelnow owns the token
+- DuelNow owns the token
 
 ## Technical Executions
 
 Duelnow developed the contract according to the requirements using Solidity, Hardhat and TypeScript. This section outlines the technical solution.
 
-### DUNC contract
+### DNOW contract
 
-DUNC token is in compliance with ERC20 as described in ​[eip-20.md](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)​. 
+DNOW token is in compliance with ERC20 as described in ​[eip-20.md](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)​. 
 
 #### Allowance Double-Spend Exploit
 
@@ -36,96 +36,50 @@ However, community agreement on an ERC standard that would protect against this 
 
 #### Ownable
 
-The contract `DUNC.sol` uses ownable pattern and has a function `owner()` to report the address with special privileges. Currently, the owner only receives all the initial supply tokens, and there are no additional functionalities associated with the ownable pattern. That may change in future versions of the contract.
+The contract DuelNow.sol uses the Ownable2Step pattern and has a function owner() to report the address with special privileges. Currently, the owner only receives all the initial supply tokens, and there are no additional functionalities associated with the ownable pattern. That may change in future versions of the contract.
 
-## Local Development
+Additionally, the renounceOwnership function is overridden to disable the ability to renounce ownership. This ensures that the contract always has an owner:
 
-### Install dependencies
+# Development Environment Setup
 
-```
-npm install
-```
+## Install dependencies
+`yarn install`
 
-### Run tests
+## Run tests
+`yarn run coverage`
 
-```
-npx hardhat test
-```
+# Deployments
 
-### Run coverage
+Pass environment variables via .env file.
+Use specific network values as in the below examples.
 
-```
-npx hardhat coverage
-```
-
-### Run Slither via Docker
-
-```
-docker run -it -v `pwd`:/src trailofbits/eth-security-toolbox
-solc-select install 0.8.20 && solc-select use 0.8.20 && cd /src
-slither .
-```
-
-## Deployment
-
-Pass environment variables via `.env` file or shell.  Use `SEPOLIA_` perfix for Sepolia and `ARBITRUMSEPOLIA_` perfix for Arbitrum sepolia as in the below examples or `MAINNET_` for Mainnet and `ARBITRUMONE` for ArbitrumOne.
-
-```ini
-SEPOLIA_INFURA_API_KEY=infura_api_key
-SEPOLIA_PRIVATE_KEY=sepolia_private_key
-
-or 
-
-ARBITRUMSEPOLIA_INFURA_API_KEY=infura_api_key
-ARBITRUMSEPOLIA_PRIVATE_KEY=arbitrum_sepolia_private_key
-
-or
-
-MAINNET_INFURA_API_KEY=infura_api_key
-MAINNET_PRIVATE_KEY=arbitrum_sepolia_private_key
-
-or
-
-ARBITRUMONE_INFURA_API_KEY=infura_api_key
-ARBITRUMONE_PRIVATE_KEY=arbitrum_sepolia_private_key
-
-and 
-
+```shell
 ETHERSCAN_API_KEY=etherscan_api_key
+ARBISCAN_API_KEY=arbiscan_api_key
+INFURA_KEY=infura_key
+PRIVATE_KEY=wallet_private_key
 ```
 
-### DUNC contract
+## Testnet Deployment
 
-Since the DUNC token is an ERC20 contract and required parameters in contructor function needs to be passed for deploying the contract.
+### Run deploy command
 
-```ini
-For Sepolia Netowrk
+Run below command to deploy on Ethereum Sepolia testnet.
 
-SEPOLIA_TOKEN_NAME=Duelnow
-SEPOLIA_TOKEN_SYMBOL=DUNC
-SEPOLIA_TOKEN_INITIAL_SUPPLY=12500000000
+`yarn run deploy:sepolia`
 
-For Arbitrum Sepolia Netowrk
+Run below command to deploy on Arbitrum Sepolia testnet.
 
-ARBITRUMSEPOLIA_TOKEN_NAME=Duelnow
-ARBITRUMSEPOLIA_TOKEN_SYMBOL=DUNC
-ARBITRUMSEPOLIA_TOKEN_INITIAL_SUPPLY=12500000000
+`yarn run deploy:arbitrumSepolia`
 
-For Ethereum Mainnet
+## Mainnet Deployment
 
-MAINNET_TOKEN_NAME=Duelnow
-MAINNET_TOKEN_SYMBOL=DUNC
-MAINNET_TOKEN_INITIAL_SUPPLY=12500000000
+### Run deploy command
 
-For Arbitrum Mainnet
+Run below command to deploy on Ethereum mainnet.
 
-ARBITRUMONE_TOKEN_NAME=Duelnow
-ARBITRUMONE_TOKEN_SYMBOL=DUNC
-ARBITRUMONE_TOKEN_INITIAL_SUPPLY=12500000000
-```
+`yarn run deploy:mainnet`
 
-Run the following command to deploy the smart contract. Replace the `[network_name]` with the network you want to deploy to. For example, sepolia (see these from hardhat.config.ts in networks object)
-```
-npx hardhat run --network [network_name] scripts/deploy.ts
-```
+Run below command to deploy on Arbitrum One mainnet.
 
+`yarn run deploy:arbitrumOne`

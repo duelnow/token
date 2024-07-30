@@ -27,7 +27,10 @@ contract DuelNow is ERC20, Ownable2Step {
      * @param spender address of the spender
      * @param addedValue value needs to be increased
      */
-    function increaseAllowance(address spender, uint256 addedValue) public override returns (bool) {
+    function increaseAllowance(
+        address spender,
+        uint256 addedValue
+    ) public override returns (bool) {
         uint256 newAllowance = allowance(msg.sender, spender).add(addedValue);
         require(newAllowance <= totalSupply(), "ERC20: allowance exceeds total supply");
         _approve(msg.sender, spender, newAllowance);
@@ -40,7 +43,10 @@ contract DuelNow is ERC20, Ownable2Step {
      * @param spender address of the spender
      * @param subtractedValue value needs to be decreased
      */
-    function decreaseAllowance(address spender, uint256 subtractedValue) public override returns (bool) {
+    function decreaseAllowance(
+        address spender,
+        uint256 subtractedValue
+    ) public override returns (bool) {
         uint256 currentAllowance = allowance(msg.sender, spender);
         require(currentAllowance >= subtractedValue, "ERC20: decreased allowance below zero");
         uint256 newAllowance = currentAllowance.sub(subtractedValue);

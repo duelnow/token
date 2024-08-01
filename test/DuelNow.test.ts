@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 import { Signer } from "ethers";
-
+import { wei } from "../scripts/utils";
 import { DuelNow } from "../typechain-types";
 
 describe("DuelNow ERC20 Token", async () => {
@@ -17,9 +17,11 @@ describe("DuelNow ERC20 Token", async () => {
   beforeEach(async () => {
     const DuelNowContract = await ethers.getContractFactory("DuelNow");
 
-    token = await DuelNowContract.deploy("DuelNow", "DNOW", 1_000_000_000);
+    token = await upgrades.deployProxy(DuelNowContract, [], { initializer: 'initialize' });
 
-    expect(await token.balanceOf(await OWNER.getAddress())).to.equal(1_000_000_000);
+    await expect(token.connect(OWNER).initialize()).to.be.rejected
+
+    expect(await token.balanceOf(await OWNER.getAddress())).to.equal(wei(1_000_000_000));
 
     // transfer 1000 tokens to {user1}
     await token.connect(OWNER).transfer(await SECOND.getAddress(), 1000);
@@ -38,7 +40,7 @@ describe("DuelNow ERC20 Token", async () => {
   });
 
   it("has correct total supply", async () => {
-    expect(await token.totalSupply()).to.equal(1_000_000_000);
+    expect(await token.totalSupply()).to.equal(wei(1_000_000_000));
   });
 
   it("has correct owner assigned", async () => {
@@ -64,7 +66,12 @@ describe("DuelNow ERC20 Token", async () => {
   });
 
   it("allowance should not increase total supply", async function () {
-    const addedValue = 1_000_000_000_00;
+    let addedValue = wei(1_000_000_000_00);
+    await expect(token.increaseAllowance(await SECOND.getAddress(), addedValue)).to.be.revertedWith(
+      "ERC20: allowance exceeds total supply"
+    );
+
+    addedValue = wei(2_000_000_000_00);
     await expect(token.increaseAllowance(await SECOND.getAddress(), addedValue)).to.be.revertedWith(
       "ERC20: allowance exceeds total supply"
     );
@@ -104,7 +111,15 @@ describe("DuelNow ERC20 Token", async () => {
     await expect(token.connect(OWNER).renounceOwnership()).to.be.revertedWith("Renouncing ownership is disabled");
   });
 
-  it("only owner should call these functions", async () => {
-    await expect(token.connect(SECOND).renounceOwnership()).to.be.revertedWith("Ownable: caller is not the owner");
+  it("only owner should call renounceOwnership", async function () {
+    await expect(token.connect(SECOND).renounceOwnership()).to.be.rejected
   });
-});
+
+  it("should upgrade contract only by owner", async function () {
+    const DuelNowV2 = await ethers.getContractFactory("DuelNow");
+    await expect(upgrades.upgradeProxy(await token.getAddress(), DuelNowV2.connect(SECOND)))
+      .to.rejected
+    await expect(upgrades.upgradeProxy(await token.getAddress(), DuelNowV2.connect(OWNER)))
+      .not.to.be.reverted;
+  });
+})

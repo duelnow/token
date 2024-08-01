@@ -1,13 +1,9 @@
 import { HardhatUserConfig } from "hardhat/config";
-import "@nomiclabs/hardhat-web3";
-import "@nomiclabs/hardhat-truffle5";
-import "@typechain/hardhat";
-import "@nomiclabs/hardhat-ethers";
-import "@solarity/hardhat-migrate";
-import "@nomicfoundation/hardhat-chai-matchers";
+import "@nomicfoundation/hardhat-toolbox";
+import '@openzeppelin/hardhat-upgrades';
 import "solidity-coverage";
-import "hardhat-gas-reporter";
 import "hardhat-contract-sizer";
+import "hardhat-gas-reporter";
 
 import * as dotenv from "dotenv";
 
@@ -81,14 +77,16 @@ const config: HardhatUserConfig = {
     runOnCompile: true,
     strict: true,
   },
-  migrate: {
-    pathToMigrations: "./deploy/",
+  sourcify: {
+    enabled: false
   },
-  typechain: {
-    target: "ethers-v5",
-    alwaysGenerateOverloads: true,
-    discriminateTypes: true,
-    dontOverrideCompile: false,
+  gasReporter: {
+    enabled: true,
+    currency: "USD",
+    gasPrice: 21,
+    outputFile: 'gas-report.txt',
+    showMethodSig: true,
+    noColors: true,
   },
 };
 

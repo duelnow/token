@@ -1,25 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable2Step.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
+import "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol";
 
-contract DuelNow is ERC20, Ownable2Step {
-    using SafeMath for uint256;
+contract DuelNow is Initializable, ERC20Upgradeable, Ownable2StepUpgradeable, UUPSUpgradeable {
 
     /**
-     * @notice constructor function is used for initialization
-     * @param name name of the token
-     * @param symbol symbol of the token
-     * @param initialSupply amount of tokens to be minted and transferred to {owner}
+     * @notice Initializer function to replace the constructor
      */
-    constructor(
-        string memory name,
-        string memory symbol,
-        uint256 initialSupply
-    ) ERC20(name, symbol) Ownable() {
-        _mint(msg.sender, initialSupply);
+    function initialize() public initializer {
+        __ERC20_init("DuelNow", "DNOW");
+        __Ownable_init(msg.sender);
+        __UUPSUpgradeable_init();
+        _mint(msg.sender, 1_000_000_000 ether);
     }
 
     /**
@@ -27,14 +24,10 @@ contract DuelNow is ERC20, Ownable2Step {
      * @param spender address of the spender
      * @param addedValue value needs to be increased
      */
-    function increaseAllowance(
-        address spender,
-        uint256 addedValue
-    ) public override returns (bool) {
-        uint256 newAllowance = allowance(msg.sender, spender).add(addedValue);
+    function increaseAllowance(address spender, uint256 addedValue) public returns (bool) {
+        (, uint256 newAllowance) = Math.tryAdd(allowance(msg.sender, spender), addedValue);
         require(newAllowance <= totalSupply(), "ERC20: allowance exceeds total supply");
         _approve(msg.sender, spender, newAllowance);
-        emit Approval(msg.sender, spender, newAllowance);
         return true;
     }
 
@@ -43,15 +36,11 @@ contract DuelNow is ERC20, Ownable2Step {
      * @param spender address of the spender
      * @param subtractedValue value needs to be decreased
      */
-    function decreaseAllowance(
-        address spender,
-        uint256 subtractedValue
-    ) public override returns (bool) {
+    function decreaseAllowance(address spender, uint256 subtractedValue) public returns (bool) {
         uint256 currentAllowance = allowance(msg.sender, spender);
         require(currentAllowance >= subtractedValue, "ERC20: decreased allowance below zero");
-        uint256 newAllowance = currentAllowance.sub(subtractedValue);
+        (, uint256 newAllowance) = Math.trySub(currentAllowance, subtractedValue);
         _approve(msg.sender, spender, newAllowance);
-        emit Approval(msg.sender, spender, newAllowance);
         return true;
     }
 
@@ -62,4 +51,9 @@ contract DuelNow is ERC20, Ownable2Step {
     function renounceOwnership() public view override onlyOwner {
         revert("Renouncing ownership is disabled");
     }
+
+    /**
+     * @dev Required by the UUPS proxy pattern for upgrade authorization
+     */
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 }

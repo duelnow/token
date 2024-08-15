@@ -8,6 +8,11 @@ import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol";
 
 contract DuelNow is Initializable, ERC20Upgradeable, Ownable2StepUpgradeable, UUPSUpgradeable {
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
     /**
      * @notice Initializer function to replace the constructor
      */

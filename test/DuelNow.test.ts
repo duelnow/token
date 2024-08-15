@@ -53,60 +53,6 @@ describe("DuelNow ERC20 Token", async () => {
     expect(await token.balanceOf(await THIRD.getAddress())).to.equal(100);
   });
 
-  it("should increase allowance", async function () {
-    const initialAllowance = await token.allowance(await OWNER.getAddress(), await SECOND.getAddress());
-    const addedValue = 100;
-
-    await expect(token.increaseAllowance(await SECOND.getAddress(), addedValue))
-      .to.emit(token, "Approval")
-      .withArgs(await OWNER.getAddress(), await SECOND.getAddress(), Number(initialAllowance) + Number(addedValue));
-
-    const updatedAllowance = await token.allowance(await OWNER.getAddress(), await SECOND.getAddress());
-    expect(updatedAllowance).to.equal(Number(initialAllowance) + Number(addedValue));
-  });
-
-  it("allowance should not increase total supply", async function () {
-    let addedValue = wei(1_000_000_000_00);
-    await expect(token.increaseAllowance(await SECOND.getAddress(), addedValue)).to.be.revertedWith(
-      "ERC20: allowance exceeds total supply"
-    );
-
-    addedValue = wei(2_000_000_000_00);
-    await expect(token.increaseAllowance(await SECOND.getAddress(), addedValue)).to.be.revertedWith(
-      "ERC20: allowance exceeds total supply"
-    );
-  });
-
-  it("should decrease allowance", async function () {
-    await token.increaseAllowance(await SECOND.getAddress(), 100);
-    const initialAllowance = await token.allowance(await OWNER.getAddress(), await SECOND.getAddress());
-    const subtractedValue = 10;
-
-    await expect(token.decreaseAllowance(await SECOND.getAddress(), subtractedValue))
-      .to.emit(token, "Approval")
-      .withArgs(
-        await OWNER.getAddress(),
-        await SECOND.getAddress(),
-        Number(initialAllowance) - Number(subtractedValue)
-      );
-
-    const updatedAllowance = await token.allowance(await OWNER.getAddress(), await SECOND.getAddress());
-    expect(updatedAllowance).to.equal(Number(initialAllowance) - subtractedValue);
-  });
-
-  it("should revert if decreasing allowance below zero", async function () {
-    await token.increaseAllowance(await SECOND.getAddress(), 100);
-    const initialAllowance = await token.allowance(await OWNER.getAddress(), await SECOND.getAddress());
-    const subtractedValue = 110;
-
-    await expect(token.decreaseAllowance(await SECOND.getAddress(), subtractedValue)).to.be.revertedWith(
-      "ERC20: decreased allowance below zero"
-    );
-
-    const updatedAllowance = await token.allowance(await OWNER.getAddress(), await SECOND.getAddress());
-    expect(updatedAllowance).to.equal(initialAllowance);
-  });
-
   it("should not renounce ownership", async () => {
     await expect(token.connect(OWNER).renounceOwnership()).to.be.revertedWith("Renouncing ownership is disabled");
   });

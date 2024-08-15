@@ -24,31 +24,6 @@ contract DuelNow is Initializable, ERC20Upgradeable, Ownable2StepUpgradeable, UU
     }
 
     /**
-     * @notice increaseAllowance function
-     * @param spender address of the spender
-     * @param addedValue value needs to be increased
-     */
-    function increaseAllowance(address spender, uint256 addedValue) public returns (bool) {
-        (, uint256 newAllowance) = Math.tryAdd(allowance(msg.sender, spender), addedValue);
-        require(newAllowance <= totalSupply(), "ERC20: allowance exceeds total supply");
-        _approve(msg.sender, spender, newAllowance);
-        return true;
-    }
-
-    /**
-     * @notice decreaseAllowance function
-     * @param spender address of the spender
-     * @param subtractedValue value needs to be decreased
-     */
-    function decreaseAllowance(address spender, uint256 subtractedValue) public returns (bool) {
-        uint256 currentAllowance = allowance(msg.sender, spender);
-        require(currentAllowance >= subtractedValue, "ERC20: decreased allowance below zero");
-        (, uint256 newAllowance) = Math.trySub(currentAllowance, subtractedValue);
-        _approve(msg.sender, spender, newAllowance);
-        return true;
-    }
-
-    /**
      * @dev Overrides the renounceOwnership function to disable the ability to renounce ownership.
      * This ensures that the contract always has an owner.
      */

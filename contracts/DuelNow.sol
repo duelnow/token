@@ -16,7 +16,7 @@ contract DuelNow is Initializable, ERC20Upgradeable, Ownable2StepUpgradeable, UU
     /**
      * @notice Initializer function to replace the constructor
      */
-    function initialize() public initializer {
+    function initialize() external initializer {
         __ERC20_init("DuelNow", "DNOW");
         __Ownable_init(msg.sender);
         __UUPSUpgradeable_init();

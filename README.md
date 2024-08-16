@@ -68,7 +68,6 @@ Use specific network values as in the below examples.
 
 ```shell
 ETHERSCAN_API_KEY=etherscan_api_key
-ARBISCAN_API_KEY=arbiscan_api_key
 INFURA_KEY=infura_key
 PRIVATE_KEY=wallet_private_key
 ```

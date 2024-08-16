@@ -22,23 +22,9 @@ const config: HardhatUserConfig = {
       gasMultiplier: 1.2,
       timeout: 0,
     },
-    arbitrumOne: {
-      url: "https://arb1.arbitrum.io/rpc",
-      chainId: 42161,
-      accounts: privateKey(),
-      gasMultiplier: 1.2,
-      timeout: 0,
-    },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${process.env.INFURA_KEY}`,
       chainId: 11155111,
-      accounts: privateKey(),
-      gasMultiplier: 1.2,
-      timeout: 0,
-    },
-    arbitrumSepolia: {
-      url: "https://sepolia-rollup.arbitrum.io/rpc",
-      chainId: 421614,
       accounts: privateKey(),
       gasMultiplier: 1.2,
       timeout: 0,
@@ -57,19 +43,7 @@ const config: HardhatUserConfig = {
     apiKey: {
       mainnet: `${process.env.ETHERSCAN_API_KEY}`,
       sepolia: `${process.env.ETHERSCAN_API_KEY}`,
-      arbitrumSepolia: `${process.env.ARBISCAN_API_KEY}`,
-      arbitrumOne: `${process.env.ARBISCAN_API_KEY}`,
-    },
-    customChains: [
-      {
-        network: "arbitrumSepolia",
-        chainId: 421614,
-        urls: {
-          apiURL: "https://api-sepolia.arbiscan.io/api",
-          browserURL: "https://sepolia.arbiscan.io/",
-        },
-      },
-    ],
+    }
   },
   contractSizer: {
     alphaSort: true,

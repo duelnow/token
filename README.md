@@ -81,10 +81,6 @@ Run below command to deploy on Ethereum Sepolia testnet.
 
 `yarn run deploy:sepolia`
 
-Run below command to deploy on Arbitrum Sepolia testnet.
-
-`yarn run deploy:arbitrumSepolia`
-
 ## Mainnet Deployment
 
 ### Run deploy command
@@ -93,6 +89,3 @@ Run below command to deploy on Ethereum mainnet.
 
 `yarn run deploy:mainnet`
 
-Run below command to deploy on Arbitrum One mainnet.
-
-`yarn run deploy:arbitrumOne`

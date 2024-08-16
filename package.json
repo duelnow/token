@@ -15,11 +15,7 @@
     "deploy:sepolia": "hardhat run --network sepolia deploy/index.ts",
     "verify:sepolia": "hardhat verify --network sepolia",
     "deploy:mainnet": "hardhat run --network mainnet deploy/index.ts",
-    "verify:mainnet": "hardhat verify --network mainnet",
-    "deploy:arbitrumSepolia": "hardhat run --network arbitrumSepolia deploy/index.ts",
-    "verify:arbitrumSepolia": "hardhat verify --network arbitrumSepolia",
-    "deploy:arbitrumOne": "hardhat run --network arbitrumOne deploy/index.ts",
-    "verify:arbitrumOne": "hardhat verify --network arbitrumOne"
+    "verify:mainnet": "hardhat verify --network mainnet"
   },
   "overrides": {
     "ws": "^8.16.1"

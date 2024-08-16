@@ -10,6 +10,7 @@ typechain-types
 # Hardhat files
 cache
 artifacts
+.openzeppelin
 
 .DS_Store
 report.json

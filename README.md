@@ -1,131 +1,90 @@
 # duelnow-token
 
-[![Coverage](https://github.com/stormxio/duelnow-token/actions/workflows/Coverage.yml/badge.svg)](https://github.com/stormxio/duelnow-token/actions/workflows/Coverage.yml)
+[![Coverage](https://github.com/duelnow/token/actions/workflows/Coverage.yml/badge.svg)](https://github.com/duelnow/token/actions/workflows/Coverage.yml)
 
-Duelnow (DUNC) token is deployed on [mainnet](https://etherscan.io/token): `N/A`
+DuelNow (DNOW) token is deployed on [mainnet](https://etherscan.io/token): `N/A`
 
-The new DUNC token will be an OpenZeplin based ERC20 contract.
+The new DNOW token will be an OpenZeplin based ERC20 contract.
+
+## Token Purpose and Ecosystem
+
+The DuelNow (DNOW) token is designed to facilitate secure and transparent transactions within the sports betting ecosystem. It enables players and participants to hold, earn, and spend tokens in a decentralized and trustless environment, supporting a new economy in competitive sports entertainment.
+
+Within the betting application known as duelnow.com, the DNOW token will be utilized to place bets on various sports events. This integration ensures that transactions are not only secure but also fast and efficient, enhancing the user experience in sports betting. The framework aims to revolutionize the way bets are placed and managed, offering a robust platform backed by blockchain technology to ensure fairness and security in every transaction.
+
+In addition to its use in betting, the DuelNow (DNOW) token will also manage membership levels for users, with the membership level being determined by the number of tokens held in their wallet. This system incentivize users to hold more DNOW tokens to unlock higher membership tiers, which may offer exclusive benefits and rewards.
+
+Moreover, the DNOW token will be instrumental in raising funds for the betting platform. Investors who contribute to the platform will receive DNOW tokens in return for their investment. The number of tokens issued will be based on a specific USD equivalent, allowing investors to acquire tokens proportionate to the amount they invest in the platform. This funding mechanism not only supports the growth of the DuelNow ecosystem but also provides investors with a stake in the platform's success.
+
 
 ## Requirements
 
-This project consists of DUNC ERC20 token.
+This project consists of DNOW ERC20 token.
 
-### DUNC contract
+### DNOW contract
 
 - Supports the standard ERC20 interface
-- The name of the token is "Duelnow"
-- The symbol of the token is "DUNC"
-- The total supply is 12.500.000.000
+- The name of the token is "DuelNow"
+- The symbol of the token is "DNOW"
+- The total supply is 1_000_000_000
 - The decimals remain according to the standard
 - The token is ownable
-- Duelnow owns the token
+- DuelNow owns the token
+
+## Allowance and Approval
+
+To ensure user flexibility and security, the DNOW token implements methods to manage allowances. 
+
+### Unlimited Approval
+
+To provide unlimited approval to a spender, users should call `approve(address spender, uint256 amount)` with the amount set to the maximum uint256 value. This allows the spender to transfer an indefinite amount of DNOW on behalf of the token holder. It is crucial for users to trust the spender, as this could lead to potential risks.
 
 ## Technical Executions
 
-Duelnow developed the contract according to the requirements using Solidity, Hardhat and TypeScript. This section outlines the technical solution.
+Duelnow developed the contract according to the requirements using Solidity, Hardhat, and TypeScript. This section outlines the technical solution.
 
-### DUNC contract
+### DNOW contract
 
-DUNC token is in compliance with ERC20 as described in ​[eip-20.md](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)​. 
-
-#### Allowance Double-Spend Exploit
-
-The allowance double-spend exploit is mitigated in this contract with functions `increaseAllowance()` and `decreaseAllowance()`.
-
-However, community agreement on an ERC standard that would protect against this exploit is still pending. Users should be aware of this exploit when interacting with this contract. Developers who use `approve()`/`transferFrom()` should keep in mind that they have to set the allowance to 0 first and verify if it was used before setting the new value.
+DNOW token is in compliance with ERC20 as described in ​[eip-20.md](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)​. 
 
 #### Ownable
 
-The contract `DUNC.sol` uses ownable pattern and has a function `owner()` to report the address with special privileges. Currently, the owner only receives all the initial supply tokens, and there are no additional functionalities associated with the ownable pattern. That may change in future versions of the contract.
+The contract DuelNow.sol uses the Ownable2Step pattern and has a function owner() to report the address with special privileges. Currently, the owner only receives all the initial supply tokens, and there are no additional functionalities associated with the ownable pattern. That may change in future versions of the contract.
 
-## Local Development
+Additionally, the renounceOwnership function is overridden to disable the ability to renounce ownership. This ensures that the contract always has an owner:
 
-### Install dependencies
+# Development Environment Setup
 
-```
-npm install
-```
+## Install dependencies
+`yarn install`
 
-### Run tests
+## Run tests
+`yarn run coverage`
 
-```
-npx hardhat test
-```
+# Deployments
 
-### Run coverage
+Pass environment variables via .env file.
+Use specific network values as in the below examples.
 
-```
-npx hardhat coverage
-```
-
-### Run Slither via Docker
-
-```
-docker run -it -v `pwd`:/src trailofbits/eth-security-toolbox
-solc-select install 0.8.20 && solc-select use 0.8.20 && cd /src
-slither .
-```
-
-## Deployment
-
-Pass environment variables via `.env` file or shell.  Use `SEPOLIA_` perfix for Sepolia and `ARBITRUMSEPOLIA_` perfix for Arbitrum sepolia as in the below examples or `MAINNET_` for Mainnet and `ARBITRUMONE` for ArbitrumOne.
-
-```ini
-SEPOLIA_INFURA_API_KEY=infura_api_key
-SEPOLIA_PRIVATE_KEY=sepolia_private_key
-
-or 
-
-ARBITRUMSEPOLIA_INFURA_API_KEY=infura_api_key
-ARBITRUMSEPOLIA_PRIVATE_KEY=arbitrum_sepolia_private_key
-
-or
-
-MAINNET_INFURA_API_KEY=infura_api_key
-MAINNET_PRIVATE_KEY=arbitrum_sepolia_private_key
-
-or
-
-ARBITRUMONE_INFURA_API_KEY=infura_api_key
-ARBITRUMONE_PRIVATE_KEY=arbitrum_sepolia_private_key
-
-and 
-
+```shell
 ETHERSCAN_API_KEY=etherscan_api_key
+INFURA_KEY=infura_key
+PRIVATE_KEY=wallet_private_key
 ```
 
-### DUNC contract
+## Testnet Deployment
 
-Since the DUNC token is an ERC20 contract and required parameters in contructor function needs to be passed for deploying the contract.
+### Run deploy command
 
-```ini
-For Sepolia Netowrk
+Run below command to deploy on Ethereum Sepolia testnet.
 
-SEPOLIA_TOKEN_NAME=Duelnow
-SEPOLIA_TOKEN_SYMBOL=DUNC
-SEPOLIA_TOKEN_INITIAL_SUPPLY=12500000000
+`yarn run deploy:sepolia`
 
-For Arbitrum Sepolia Netowrk
+## Mainnet Deployment
 
-ARBITRUMSEPOLIA_TOKEN_NAME=Duelnow
-ARBITRUMSEPOLIA_TOKEN_SYMBOL=DUNC
-ARBITRUMSEPOLIA_TOKEN_INITIAL_SUPPLY=12500000000
+### Run deploy command
 
-For Ethereum Mainnet
+Run below command to deploy on Ethereum mainnet.
 
-MAINNET_TOKEN_NAME=Duelnow
-MAINNET_TOKEN_SYMBOL=DUNC
-MAINNET_TOKEN_INITIAL_SUPPLY=12500000000
-
-For Arbitrum Mainnet
-
-ARBITRUMONE_TOKEN_NAME=Duelnow
-ARBITRUMONE_TOKEN_SYMBOL=DUNC
-ARBITRUMONE_TOKEN_INITIAL_SUPPLY=12500000000
-```
-
-Run the following command to deploy the smart contract. Replace the `[network_name]` with the network you want to deploy to. For example, sepolia (see these from hardhat.config.ts in networks object)
-```
-npx hardhat run --network [network_name] scripts/deploy.ts
-```
+`yarn run deploy:mainnet`
 

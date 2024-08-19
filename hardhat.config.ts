@@ -1,103 +1,50 @@
 import { HardhatUserConfig } from "hardhat/config";
-import dotenv from 'dotenv-extended';
 import "@nomicfoundation/hardhat-toolbox";
-import { SolcUserConfig } from "hardhat/types";
+import '@openzeppelin/hardhat-upgrades';
 import "solidity-coverage";
 import "hardhat-contract-sizer";
 import "hardhat-gas-reporter";
 
-dotenv.load()
+import * as dotenv from "dotenv";
 
-const { ETHERSCAN_API_KEY } = process.env;
+dotenv.config();
 
-const getAccounts = (network: string): string[] | undefined => {
-  let accounts
-  const privateKey = process.env[`${network}_PRIVATE_KEY`]
-
-  if (privateKey) {
-    accounts = [privateKey]
-  }
-  return accounts
+function privateKey() {
+  return process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
 }
 
-const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
-  version: '0.8.20',
-  settings: {
-    optimizer: {
-      enabled: true,
-      runs: 1_000_000,
-    },
-    metadata: {
-      bytecodeHash: 'none',
-    },
-  },
-}
-
-interface EtherscanConfig {
-  apiKey: {
-    mainnet: string,
-    sepolia: string,
-    arbitrumSepolia: string
-    arbitrumOne: string
-  },
-  customChains: any
-}
-const EtherscanConfig: EtherscanConfig = {
-  apiKey: {
-    mainnet: ETHERSCAN_API_KEY || "",
-    sepolia: ETHERSCAN_API_KEY || "",
-    arbitrumSepolia: ETHERSCAN_API_KEY || "",
-    arbitrumOne: ETHERSCAN_API_KEY || "",
-  },
-  customChains: [
-    {
-      network: "arbitrumSepolia",
-      chainId: 421614,
-      urls: {
-        apiURL: "https://api-sepolia.arbiscan.io/api",
-        browserURL: "https://sepolia.arbiscan.io/",
-      },
-    },
-  ],
-};
-interface ExtendedHardhatUserConfig extends HardhatUserConfig {
-  etherscan: EtherscanConfig;
-}
-
-const config: ExtendedHardhatUserConfig = {
+const config: HardhatUserConfig = {
   networks: {
-    hardhat: {
-      allowUnlimitedContractSize: true
-    },
+    hardhat: {},
     mainnet: {
-      url: `https://mainnet.infura.io/v3/${process.env.MAINNET_INFURA_API_KEY}`,
-      accounts: getAccounts('MAINNET'),
+      url: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
+      accounts: privateKey(),
+      gasMultiplier: 1.2,
+      timeout: 0,
     },
     sepolia: {
-      url: `https://sepolia.infura.io/v3/${process.env.SEPOLIA_INFURA_API_KEY}`,
-      accounts: getAccounts('SEPOLIA'),
-      gasMultiplier: 1.2,
-      timeout: 0,
-    },
-    arbitrumOne: {
-      url: "https://arb1.arbitrum.io/rpc",
-      chainId: 42161,
-      accounts: getAccounts('ARBITRUMONE'),
-      gasMultiplier: 1.2,
-      timeout: 0,
-    },
-    arbitrumSepolia: {
-      url: 'https://sepolia-rollup.arbitrum.io/rpc',
-      chainId: 421614,
-      accounts: getAccounts('ARBITRUMSEPOLIA'),
+      url: `https://sepolia.infura.io/v3/${process.env.INFURA_KEY}`,
+      chainId: 11155111,
+      accounts: privateKey(),
       gasMultiplier: 1.2,
       timeout: 0,
     },
   },
   solidity: {
-    compilers: [DEFAULT_COMPILER_SETTINGS],
+    version: "0.8.20",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
   },
-  etherscan: EtherscanConfig,
+  etherscan: {
+    apiKey: {
+      mainnet: `${process.env.ETHERSCAN_API_KEY}`,
+      sepolia: `${process.env.ETHERSCAN_API_KEY}`,
+    }
+  },
   contractSizer: {
     alphaSort: true,
     disambiguatePaths: false,
@@ -105,7 +52,7 @@ const config: ExtendedHardhatUserConfig = {
     strict: true,
   },
   sourcify: {
-    enabled: true
+    enabled: false
   },
   gasReporter: {
     enabled: true,
@@ -115,6 +62,6 @@ const config: ExtendedHardhatUserConfig = {
     showMethodSig: true,
     noColors: true,
   },
-}
+};
 
 export default config;

@@ -12,13 +12,9 @@
     "prettier": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'",
     "postinstall": "npx hardhat compile && npm run generate-types",
     "test": "hardhat test",
-    "deploy:arbitrumSepolia": "hardhat run --network arbitrumSepolia",
-    "verify:arbitrumSepolia": "hardhat verify --network arbitrumSepolia",
-    "deploy:arbitrumOne": "hardhat run --network arbitrumOne",
-    "verify:arbitrumOne": "hardhat verify --network arbitrumOne",
-    "deploy:sepolia": "hardhat run --network sepolia",
+    "deploy:sepolia": "hardhat run --network sepolia deploy/index.ts",
     "verify:sepolia": "hardhat verify --network sepolia",
-    "deploy:mainnet": "hardhat run --network mainnet",
+    "deploy:mainnet": "hardhat run --network mainnet deploy/index.ts",
     "verify:mainnet": "hardhat verify --network mainnet"
   },
   "overrides": {
@@ -26,17 +22,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stormxio/duelnow-token.git"
+    "url": "git+https://github.com/duelnow/token.git"
   },
   "keywords": [
-    "dunc"
+    "duelnow",
+    "duelNow",
+    "dnow",
+    "DNOW"
   ],
-  "author": "Stormx Engineering",
+  "author": "DuelNow Engineering",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/stormxio/duelnow-token/issues"
+    "url": "https://github.com/duelnow/token/issues"
   },
-  "homepage": "https://github.com/stormxio/duelnow-token#readme",
+  "homepage": "https://github.com/duelnow/token#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@openzeppelin/contracts": "^5.0.1",
@@ -50,5 +49,9 @@
     "solhint": "^4.1.1",
     "solhint-plugin-prettier": "^0.1.0",
     "solidity-coverage": "^0.8.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts-upgradeable": "^5.0.2",
+    "@openzeppelin/hardhat-upgrades": "^3.2.1"
   }
 }

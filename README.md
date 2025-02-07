@@ -1,8 +1,6 @@
 # duelnow-token
 
-[![Coverage](https://github.com/duelnow/token/actions/workflows/Coverage.yml/badge.svg)](https://github.com/duelnow/token/actions/workflows/Coverage.yml)
-
-DuelNow (DNOW) token is deployed on [mainnet](https://etherscan.io/token): `N/A`
+DuelNow (DNOW) token is deployed on [mainnet](https://etherscan.io/token): 0x8074836637eb9cc73a01a65d5700907fc639c4e9
 
 The new DNOW token will be an OpenZeplin based ERC20 contract.
 
@@ -15,7 +13,6 @@ Within the betting application known as duelnow.com, the DNOW token will be util
 In addition to its use in betting, the DuelNow (DNOW) token will also manage membership levels for users, with the membership level being determined by the number of tokens held in their wallet. This system incentivize users to hold more DNOW tokens to unlock higher membership tiers, which may offer exclusive benefits and rewards.
 
 Moreover, the DNOW token will be instrumental in raising funds for the betting platform. Investors who contribute to the platform will receive DNOW tokens in return for their investment. The number of tokens issued will be based on a specific USD equivalent, allowing investors to acquire tokens proportionate to the amount they invest in the platform. This funding mechanism not only supports the growth of the DuelNow ecosystem but also provides investors with a stake in the platform's success.
-
 
 ## Requirements
 
@@ -33,7 +30,7 @@ This project consists of DNOW ERC20 token.
 
 ## Allowance and Approval
 
-To ensure user flexibility and security, the DNOW token implements methods to manage allowances. 
+To ensure user flexibility and security, the DNOW token implements methods to manage allowances.
 
 ### Unlimited Approval
 
@@ -43,9 +40,9 @@ To provide unlimited approval to a spender, users should call `approve(address s
 
 Duelnow developed the contract according to the requirements using Solidity, Hardhat, and TypeScript. This section outlines the technical solution.
 
-### DNOW contract
+### DNOW Contract Implementation
 
-DNOW token is in compliance with ERC20 as described in ​[eip-20.md](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)​. 
+DNOW token is in compliance with ERC20 as described in ​[eip-20.md](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)​.
 
 #### Ownable
 
@@ -56,9 +53,11 @@ Additionally, the renounceOwnership function is overridden to disable the abilit
 # Development Environment Setup
 
 ## Install dependencies
+
 `yarn install`
 
 ## Run tests
+
 `yarn run coverage`
 
 # Deployments
@@ -87,4 +86,3 @@ Run below command to deploy on Ethereum Sepolia testnet.
 Run below command to deploy on Ethereum mainnet.
 
 `yarn run deploy:mainnet`
-
